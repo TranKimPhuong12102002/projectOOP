@@ -695,5 +695,4 @@ public class StudentDB2 extends javax.swing.JFrame {
     private javax.swing.JTextField txtstudentid;
     private javax.swing.JTextField txtsurname;
     private javax.swing.JButton update;
-    // End of variables declaration//GEN-END:variables
 }
