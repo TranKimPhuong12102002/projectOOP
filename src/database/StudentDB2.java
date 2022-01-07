@@ -5,8 +5,8 @@
  */
 package database;
 
-import com.studentdata.view.AdminHome;
-import com.studentdata.view.Index;
+import com.studentdb.view.AdminHome;
+import com.studentdb.view.Index;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
  
@@ -22,19 +22,18 @@ import java.util.Vector;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import com.studentdb.connect.DatabaseConnect;
+        
+        
+        
 /**
  *
  * @author Tran Kim Phuong
  */
 public class StudentDB2 extends javax.swing.JFrame {
-    private static final String username = "root";
-    private static final String password = "12102002";
-    private static final String dataConn = "jdbc:mysql://localhost:3306/student";
-    
-    Connection sqlconn = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-     
+    Connection sqlconn = DatabaseConnect.getConnection();
         
     
     /**
@@ -56,8 +55,6 @@ public class StudentDB2 extends javax.swing.JFrame {
     public  void updateDB(){
         try {
             // kết nối đến database
-          Class.forName("com.mysql.jdbc.Driver");
-          sqlconn= DriverManager.getConnection(dataConn,username,password);
           pst = sqlconn.prepareStatement("select * from studentdata");
           // lấy data từ bảng studentdata
           rs = pst.executeQuery();
@@ -85,7 +82,7 @@ public class StudentDB2 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -306,7 +303,7 @@ public class StudentDB2 extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         jPanel6.setBackground(new java.awt.Color(204, 255, 255));
@@ -404,15 +401,16 @@ public class StudentDB2 extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(22, 22, 22))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,9 +464,9 @@ public class StudentDB2 extends javax.swing.JFrame {
         setJMenuBar(jMenuBar1);
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printActionPerformed
+    private void printActionPerformed(java.awt.event.ActionEvent evt) {                                      
         MessageFormat header = new MessageFormat("Printing in progress");
         MessageFormat footer = new MessageFormat("Page {0, number, integer}");
         try
@@ -481,20 +479,18 @@ public class StudentDB2 extends javax.swing.JFrame {
             System.err.format("No Printer found", e.getMessage());
         }  
         
-    }//GEN-LAST:event_printActionPerformed
+    }                                     
 
-    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {                                     
      int yesNo = JOptionPane.showConfirmDialog(this, "Do you want to exit", "Confirm", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(yesNo==JOptionPane.YES_OPTION){
             this.dispose();
             new AdminHome().setVisible(true);
         }
-    }//GEN-LAST:event_exitActionPerformed
+    }                                    
 
-    private void addnewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addnewActionPerformed
+    private void addnewActionPerformed(java.awt.event.ActionEvent evt) {                                       
         try {
-          Class.forName("com.mysql.jdbc.Driver");
-          sqlconn= DriverManager.getConnection(dataConn,username,password);
           pst = sqlconn.prepareStatement("insert into studentdata(studentid,firstname,surname,address,gender,mobile,email,status)values"
                   +"(?,?,?,?,?,?,?,?)");
           pst.setString(1,txtstudentid.getText());
@@ -512,9 +508,9 @@ public class StudentDB2 extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }//GEN-LAST:event_addnewActionPerformed
+    }                                      
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {                                     
            DefaultTableModel RecordTable=(DefaultTableModel) jTable1.getModel();
            int SelectedRows = jTable1.getSelectedRow();
            txtstudentid.setText(RecordTable.getValueAt(SelectedRows,1).toString());
@@ -526,15 +522,13 @@ public class StudentDB2 extends javax.swing.JFrame {
            txtemail.setText(RecordTable.getValueAt(SelectedRows,7).toString());
            cbstatus.setSelectedItem(RecordTable.getValueAt(SelectedRows,8).toString());
            
-    }//GEN-LAST:event_jTable1MouseClicked
+    }                                    
 
-    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {                                       
          DefaultTableModel RecordTable=(DefaultTableModel) jTable1.getModel();
          int SelectedRows = jTable1.getSelectedRow();
         try {
           int id = Integer.parseInt(RecordTable.getValueAt(SelectedRows, 0).toString());
-          Class.forName("com.mysql.jdbc.Driver");
-          sqlconn= DriverManager.getConnection(dataConn,username,password);
           pst = sqlconn.prepareStatement("update studentdata set studentid=? ,firstname = ? ,surname=?, address=?,gender=?,mobile=?,email=?,status=? where id=?");
           pst.setString(1,txtstudentid.getText());
           pst.setString(2,txtfirstname.getText());
@@ -552,9 +546,9 @@ public class StudentDB2 extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }//GEN-LAST:event_updateActionPerformed
+    }                                      
 
-    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+    private void resetActionPerformed(java.awt.event.ActionEvent evt) {                                      
         int yesNo = JOptionPane.showConfirmDialog(this, "Do you want to reset?", "Confirm", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(yesNo==JOptionPane.YES_OPTION){
           txtstudentid.setText(" ");
@@ -569,9 +563,9 @@ public class StudentDB2 extends javax.swing.JFrame {
           RecordTable.setRowCount(0);
         }
          
-    }//GEN-LAST:event_resetActionPerformed
+    }                                     
 
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {                                       
        
         DefaultTableModel RecordTable = (DefaultTableModel)jTable1.getModel();
         int SelectedRows = jTable1.getSelectedRow();
@@ -579,8 +573,6 @@ public class StudentDB2 extends javax.swing.JFrame {
            int id = Integer.parseInt(RecordTable.getValueAt(SelectedRows, 0).toString());
            int deleteitem =JOptionPane.showConfirmDialog(null, "Do you want to delete item ?","Warning!",JOptionPane.YES_NO_OPTION);
            if(deleteitem==JOptionPane.YES_OPTION){
-            Class.forName("com.mysql.jdbc.Driver");
-            sqlconn= DriverManager.getConnection(dataConn,username,password);
             pst = sqlconn.prepareStatement("delete from studentdata where id=?");// điều kiện trả về của id
             pst.setInt(1, id);
             pst.executeUpdate();
@@ -596,32 +588,29 @@ public class StudentDB2 extends javax.swing.JFrame {
             txtemail.setText(" ");
             cbstatus.setSelectedIndex(0);
           }
-        } catch (ClassNotFoundException ex) {
-         java.util.logging.Logger.getLogger(StudentDB2.class.getName()).log(java.util.logging.Level.SEVERE,
-           null, ex);
         } catch (SQLException ex) {
              System.err.println(ex);
  
         }
-    }//GEN-LAST:event_deleteActionPerformed
+    }                                      
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         int yesNo= JOptionPane.showConfirmDialog(this, "Do you want to logout?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(yesNo==JOptionPane.YES_OPTION){
             new Index().setVisible(true);
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }                                          
 
-    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {                                       
         int yesNo = JOptionPane.showConfirmDialog(this, "Do you want to exit?", "Confirm", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(yesNo==JOptionPane.YES_OPTION){
             System.exit(0);
         }
-    }//GEN-LAST:event_jMenu1ActionPerformed
+    }                                      
 
-    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu2ActionPerformed
+    }                                      
 
     /**
      * @param args the command line arguments
@@ -658,7 +647,7 @@ public class StudentDB2 extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton addnew;
     private javax.swing.JComboBox<String> cbgender;
     private javax.swing.JComboBox<String> cbstatus;
@@ -695,4 +684,5 @@ public class StudentDB2 extends javax.swing.JFrame {
     private javax.swing.JTextField txtstudentid;
     private javax.swing.JTextField txtsurname;
     private javax.swing.JButton update;
+    // End of variables declaration                   
 }
